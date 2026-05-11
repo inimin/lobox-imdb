@@ -48,21 +48,21 @@ public class ImdbDatasetDownloader {
             int existingCount = 0;
             int downloadedCount = 0;
 
-            for (String fileName : props.getFiles()) {
-                Path targetFile = directory.resolve(fileName);
+            for (String tableName : props.getTableNames()) {
+                Path baseFile = props.getAbsoluteBasePath(tableName);
 
-                if (isValidExistingFile(targetFile)) {
-                    log.info("Skipping downloading existing file: {}", fileName);
+                if (isValidExistingFile(baseFile)) {
+                    log.info("Skipping downloading existing file: {}", baseFile.getFileName());
                     existingCount++;
                     continue;
                 }
 
-                downloadFile(targetFile, fileName);
+                download(tableName);
                 downloadedCount++;
             }
 
             log.info("IMDb dataset download completed. Existing: {}, Newly downloaded: {}/{}",
-                    existingCount, downloadedCount, props.getFiles().size());
+                    existingCount, downloadedCount, props.getTableNames().size());
 
         } catch (Exception e) {
             log.error("Failed to download IMDb dataset", e);
@@ -81,8 +81,11 @@ public class ImdbDatasetDownloader {
         return Files.exists(file) && Files.size(file) > 0;
     }
 
-    private void downloadFile(Path target, String fileName) throws Exception {
-        String url = props.getBaseUrl() + fileName;
+    private void download(String tableName) throws Exception {
+        Path path = props.getAbsoluteBasePath(tableName);
+        String fileName = props.getBaseName(tableName);
+
+        String url = props.getTableUrl(tableName);
         log.info("Downloading: {} → {}", fileName, url);
 
         HttpRequest request = HttpRequest.newBuilder()
@@ -94,7 +97,7 @@ public class ImdbDatasetDownloader {
         try (InputStream inputStream = httpClient.send(request,
                 HttpResponse.BodyHandlers.ofInputStream()).body()) {
 
-            Files.copy(inputStream, target, StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
             log.info("Successfully downloaded {}", fileName);
         }
     }

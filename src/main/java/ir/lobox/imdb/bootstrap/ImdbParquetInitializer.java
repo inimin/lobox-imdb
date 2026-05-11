@@ -33,14 +33,12 @@ public class ImdbParquetInitializer {
         int skipped = 0;
         int missing = 0;
 
-        for (String tsvFileName : props.getFiles()) {
-
-            Path tsvPath = basePath.resolve(tsvFileName);
-            String parquetFileName = tsvFileName.replace(".tsv.gz", ".parquet");
-            Path parquetPath = basePath.resolve(parquetFileName);
+        for (String tableName : props.getTableNames()) {
+            Path tsvPath = props.getAbsoluteBasePath(tableName);
+            Path parquetPath = props.getAbsoluteTargetPath(tableName);
 
             if (Files.exists(parquetPath)) {
-                log.info("Skipping converting {} (Parquet file already exists)", tsvFileName);
+                log.info("Skipping converting {} (Parquet file already exists)", parquetPath.getFileName());
                 skipped++;
                 continue;
             }
@@ -59,11 +57,11 @@ public class ImdbParquetInitializer {
 
                 jdbcTemplate.execute(sql);
 
-                log.info("Successfully converted: {}", tsvFileName);
+                log.info("Successfully converted: {}", tsvPath.getFileName());
                 converted++;
 
             } catch (Exception e) {
-                log.error("Failed to convert: {}", tsvFileName, e);
+                log.error("Failed to convert: {}", tsvPath.getFileName(), e);
             }
         }
 
