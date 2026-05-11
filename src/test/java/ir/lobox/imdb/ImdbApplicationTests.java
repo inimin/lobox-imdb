@@ -1,9 +1,9 @@
 package ir.lobox.imdb;
 
-import ir.lobox.imdb.model.Movie;
-import ir.lobox.imdb.model.PageResult;
-import ir.lobox.imdb.model.TitleCrew;
+import ir.lobox.imdb.model.BestMovieByYear;
+import ir.lobox.imdb.model.ActorTitlePair;
 import ir.lobox.imdb.repository.ActorPairsRepository;
+import ir.lobox.imdb.repository.BestMoviesByYearRepository;
 import ir.lobox.imdb.repository.TitleCrewRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +20,13 @@ class ImdbApplicationTests {
 	@Autowired
 	private ActorPairsRepository actorPairsRepository;
 
+	@Autowired
+	private BestMoviesByYearRepository betterMoviesByYearRepository;
+
 	@Test
 	void contextLoads() {
-		List<Movie> movieList = actorPairsRepository.findActorPairs("Tom Hanks","Tim Allen");
+		List<ActorTitlePair> movieList = actorPairsRepository.findActorPairs("Tom Hanks","Tim Allen");
+		List<BestMovieByYear> movieList2 = betterMoviesByYearRepository.findBestMoviesByYear("Action");
 		titleCrewRepository.findPaged();
 
 	}

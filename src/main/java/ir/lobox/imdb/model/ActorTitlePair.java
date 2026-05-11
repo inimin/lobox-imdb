@@ -1,11 +1,15 @@
 package ir.lobox.imdb.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
-public class Movie {
+@AllArgsConstructor
+public class ActorTitlePair {
     private String tconst;
     private String actorId;
     private String titleType;

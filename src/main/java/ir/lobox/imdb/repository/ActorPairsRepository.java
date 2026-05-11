@@ -1,7 +1,6 @@
 package ir.lobox.imdb.repository;
 
-import ir.lobox.imdb.model.Movie;
-import lombok.RequiredArgsConstructor;
+import ir.lobox.imdb.model.ActorTitlePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -20,7 +19,7 @@ public class ActorPairsRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<Movie> findActorPairs(String actor1, String actor2) {
+    public List<ActorTitlePair> findActorPairs(String actor1, String actor2) {
         String sql = """
                 SELECT DISTINCT t1.*
                 FROM actor_title_pairs t1
@@ -31,7 +30,7 @@ public class ActorPairsRepository {
                 ORDER BY t1.startYear DESC;
                 """;
 
-        RowMapper<Movie> rowMapper = BeanPropertyRowMapper.newInstance(Movie.class);
+        RowMapper<ActorTitlePair> rowMapper = BeanPropertyRowMapper.newInstance(ActorTitlePair.class);
         jdbcTemplate.queryForList(sql, actor1, actor2);
         return jdbcTemplate.query(sql, rowMapper, actor1, actor2);
     }
