@@ -23,7 +23,7 @@ public class TitleCrewRepository {
 
     public void findPaged() {
         String sql = """
-                    SELECT * FROM title_same_director_writer_alive
+                    SELECT * FROM title_same_director_writer_alive LIMIT 10;
         """;
 
         List<Map<String, Object>> result = jdbcTemplate.queryForList(sql);
