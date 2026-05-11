@@ -27,23 +27,19 @@ public class TitleCrewRepository {
 
         int validPage = Math.max(page, 0);
         int validSize = Math.min(Math.max(size, 1), 100);
-
         int offset = validPage * validSize;
 
 
         String sql = """
                     SELECT * FROM title_same_director_writer_alive LIMIT ? OFFSET ?;
         """;
-
         RowMapper<TitleCrew> rowMapper = BeanPropertyRowMapper.newInstance(TitleCrew.class);
-
         List<TitleCrew> content = jdbcTemplate.query(sql,rowMapper, validSize, offset);
 
         String countSql = """
                 SELECT COUNT(*) 
                 FROM title_same_director_writer_alive
                 """;
-
         Integer totalElements = jdbcTemplate.queryForObject(countSql, Integer.class);
         int total = totalElements != null ? totalElements : 0;
         int totalPages = (total == 0) ? 0 : (int) Math.ceil((double) total / validSize);

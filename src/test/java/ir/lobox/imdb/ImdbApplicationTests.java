@@ -1,5 +1,6 @@
 package ir.lobox.imdb;
 
+import ir.lobox.imdb.dto.PageResponse;
 import ir.lobox.imdb.model.BestMovieByYear;
 import ir.lobox.imdb.model.ActorTitlePair;
 import ir.lobox.imdb.repository.ActorPairsRepository;
@@ -25,8 +26,8 @@ class ImdbApplicationTests {
 
 	@Test
 	void contextLoads() {
-		List<ActorTitlePair> movieList = actorPairsRepository.findActorPairs("Tom Hanks","Tim Allen");
-		List<BestMovieByYear> movieList2 = betterMoviesByYearRepository.findBestMoviesByYear("Action");
+		PageResponse<ActorTitlePair> movieList = actorPairsRepository.findActorPairs("Tom Hanks","Tim Allen",0,10);
+		PageResponse<BestMovieByYear> movieList2 = betterMoviesByYearRepository.findBestMoviesByYear("Action",0,10);
 		titleCrewRepository.findPaged(1,10);
 
 	}
