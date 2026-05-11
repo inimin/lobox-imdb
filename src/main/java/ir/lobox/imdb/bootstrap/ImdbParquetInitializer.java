@@ -15,7 +15,6 @@ import java.nio.file.Path;
 
 @Component
 @RequiredArgsConstructor
-@Order(2)
 public class ImdbParquetInitializer {
 
     private static final Logger log = LoggerFactory.getLogger(ImdbParquetInitializer.class);
@@ -23,6 +22,7 @@ public class ImdbParquetInitializer {
     private final ImdbProperties props;
     private final JdbcTemplate jdbcTemplate;
 
+    @Order(2)
     @EventListener(ApplicationReadyEvent.class)
     public void convertAllToParquet() {
         log.info("Starting IMDb TSV.GZ → Parquet conversion...");

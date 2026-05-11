@@ -24,7 +24,6 @@ import java.time.Duration;
 
 
 @Component
-@Order(1)
 public class ImdbDatasetDownloader {
 
     private static final Logger log = LoggerFactory.getLogger(ImdbDatasetDownloader.class);
@@ -39,6 +38,7 @@ public class ImdbDatasetDownloader {
                 .build();
     }
 
+    @Order(1)
     @EventListener(ApplicationReadyEvent.class)
     public void downloadAll() {
         try {
