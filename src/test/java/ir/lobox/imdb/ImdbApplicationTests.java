@@ -27,7 +27,7 @@ class ImdbApplicationTests {
 	void contextLoads() {
 		List<ActorTitlePair> movieList = actorPairsRepository.findActorPairs("Tom Hanks","Tim Allen");
 		List<BestMovieByYear> movieList2 = betterMoviesByYearRepository.findBestMoviesByYear("Action");
-		titleCrewRepository.findPaged();
+		titleCrewRepository.findPaged(1,10);
 
 	}
 
