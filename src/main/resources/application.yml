@@ -18,3 +18,8 @@ imdb:
       base: tsv.gz
       target: parquet
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics

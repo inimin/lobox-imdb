@@ -1,0 +1,10 @@
+You can put the IMDB dataset on folder named data on project root or application will downloaded it;
+This application use DuckDB for analyzing the TSV.GZ files and creating reports.
+
+Also application use Actuator plugin for extracting metrics like http.server.request
+so you can get metrics by calling api
+GET /actuator/metrics/http.server.requests
+on "statistic" key you can found number of count like "statistic":"COUNT","value":1.0
+
+You can get API usage from http://localhost:8080/swagger-ui/index.html
+
